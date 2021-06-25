@@ -19,6 +19,9 @@ import { RepositoryNotFoundError } from "typeorm";
 import { DetailTagController } from "./controllers/tags/DetailTagController";
 import { DeleteTagController } from "./controllers/tags/DeleteTagController";
 import { EditTagController } from "./controllers/tags/EditTagController";
+import { DetailContactController } from "./controllers/contacts/DetailContactController";
+import { DeleteContactService } from "./services/contacts/DeleteContactService";
+import { DeleteContactsController } from "./controllers/contacts/DeleteContactsController";
 
 const router = Router();
 
@@ -43,6 +46,8 @@ const listUserReceiveComplimentsController = new ListUserReceiveComplimentContro
 const createContactsController = new CreateContactsController();
 const listContactsController = new ListContactsController();
 const editContactsController = new EditContactsController();
+const detailContactsController = new DetailContactController();
+const deleteContactsController = new DeleteContactsController();
 
 //Uma boa prática é o nome do recurso ser no plural
 
@@ -72,5 +77,7 @@ router.get("/users/compliments/receive", ensureAuthenticated, listUserReceiveCom
 router.post("/contacts", ensureAuthenticated, createContactsController.handle);
 router.get("/contacts", ensureAuthenticated, listContactsController.handle);
 router.patch("/contacts/:id", ensureAuthenticated, editContactsController.handle);
+router.get("/contacts/:id", ensureAuthenticated, detailContactsController.handle);
+router.delete("/contacts/:id", ensureAuthenticated, deleteContactsController.handle);
 
 export { router };
