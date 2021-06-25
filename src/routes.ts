@@ -13,6 +13,8 @@ import { CreateContactsController } from "./controllers/contacts/CreateContactsC
 import { ListContactsController } from "./controllers/contacts/ListContactsController";
 import { EditContactsController } from "./controllers/contacts/EditContactsController";
 import { EditUserController } from "./controllers/users/EditUsersController";
+import { DeleteUsersController } from "./controllers/users/DeleteUsersController";
+import { DetailUsersController } from "./controllers/users/DetailUsersController";
 
 const router = Router();
 
@@ -21,6 +23,8 @@ const authenticateUserController = new AuthenticateUserController();
 const createUserController = new CreateUserController();
 const listUsersController = new ListUsersController();
 const editUsersController = new EditUserController();
+const deleteUsersController = new DeleteUsersController();
+const detailUsersController = new DetailUsersController();
 
 const createTagController = new CreateTagController();
 const listTagsController = new ListTagsController();
@@ -42,6 +46,8 @@ router.post("/login", authenticateUserController.handle);
 router.post("/users", createUserController.handle);
 router.get("/users", ensureAuthenticated, listUsersController.handle);
 router.patch("/users", ensureAuthenticated, editUsersController.handle);
+router.delete("/users", ensureAuthenticated, deleteUsersController.handle);
+router.get("/users/details", ensureAuthenticated, detailUsersController.handle);
 
 //Tags
 router.post("/tags", ensureAuthenticated, ensureAmdin, createTagController.handle);

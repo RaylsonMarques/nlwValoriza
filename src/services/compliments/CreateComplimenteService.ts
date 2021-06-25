@@ -1,33 +1,30 @@
 import { getCustomRepository } from "typeorm"
 import { ComplimentsRepositories } from "../../repositories/ComplimentsRepositories"
+import { ContactsRepositories } from "../../repositories/ContactsRepositories";
 import { UsersRepositories } from "../../repositories/UsersRepositories";
 
 interface IComplimenteRequest {
   tag_id: string;
   user_sender: string;
-  user_receiver: string;
+  contact_id: string;
   message: string;
 }
 
 class CreateComplimentService {
 
-  async execute({ tag_id, user_sender, user_receiver, message }: IComplimenteRequest) {
+  async execute({ tag_id, user_sender, contact_id, message }: IComplimenteRequest) {
     const complimentsRepositories = getCustomRepository(ComplimentsRepositories);
-    const usersRepositories = getCustomRepository(UsersRepositories);
+    const contactsRepositores = getCustomRepository(ContactsRepositories);
 
-    if (user_sender === user_receiver) {
-      throw new Error("Usuário não pode enviar para ele mesmo");
-    }
+    const contactExists = await contactsRepositores.findOne(contact_id);
 
-    const userReceiverExists = await usersRepositories.findOne(user_receiver);
-
-    if (!userReceiverExists) {
-      throw new Error("Usuário de recebimento não existe");
+    if (!contactExists) {
+      throw new Error("Contato não existe");
     }
 
     const compliment = complimentsRepositories.create({
       tag_id,
-      user_receiver,
+      contact_id,
       user_sender,
       message
     });

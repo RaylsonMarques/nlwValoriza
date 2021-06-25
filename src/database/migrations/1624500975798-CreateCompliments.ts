@@ -1,4 +1,4 @@
-import {MigrationInterface, QueryRunner, Table} from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 export class CreateCompliments1624500975798 implements MigrationInterface {
 
@@ -17,7 +17,7 @@ export class CreateCompliments1624500975798 implements MigrationInterface {
                         type: "uuid",
                     },
                     {
-                        name: "user_receiver",
+                        name: "contact_id",
                         type: "uuid",
                     },
                     {
@@ -44,10 +44,10 @@ export class CreateCompliments1624500975798 implements MigrationInterface {
                         onUpdate: "SET NULL"
                     },
                     {
-                        name: "FKUsersReceiverCompliments",
-                        referencedTableName: "users",
+                        name: "FKUContactCompliments",
+                        referencedTableName: "contacts",
                         referencedColumnNames: ["id"],
-                        columnNames: ["user_receiver"],
+                        columnNames: ["contact_id"],
                         onDelete: "SET NULL",
                         onUpdate: "SET NULL"
                     },

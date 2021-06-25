@@ -1,5 +1,6 @@
 import { Entity, PrimaryColumn, Column, CreateDateColumn, JoinColumn, ManyToOne } from "typeorm";
 import { v4 as uuid } from "uuid";
+import { Contacts } from "./Contacts";
 import { Tag } from "./Tag";
 import { User } from "./User";
 
@@ -17,18 +18,18 @@ class Compliment {
   userSender: User;
 
   @Column()
-  user_receiver: string;
+  contact_id: string;
 
-  @JoinColumn({ name: "user_receiver" })
-  @ManyToOne(() => User)
-  userReceiver: User;
+  @JoinColumn({ name: "contact_id" })
+  @ManyToOne(() => Contacts)
+  contact: Contacts;
 
   @Column()
   tag_id: string;
 
   @JoinColumn({ name: "tag_id" })
   @ManyToOne(() => Tag)
-  tag:Tag;
+  tag: Tag;
 
   @Column()
   message: string;
@@ -37,8 +38,8 @@ class Compliment {
   created_at: Date;
 
   constructor() {
-    if(!this.id) {
-      this.id  = uuid();
+    if (!this.id) {
+      this.id = uuid();
     }
   }
 }
