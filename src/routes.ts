@@ -15,6 +15,10 @@ import { EditContactsController } from "./controllers/contacts/EditContactsContr
 import { EditUserController } from "./controllers/users/EditUsersController";
 import { DeleteUsersController } from "./controllers/users/DeleteUsersController";
 import { DetailUsersController } from "./controllers/users/DetailUsersController";
+import { RepositoryNotFoundError } from "typeorm";
+import { DetailTagController } from "./controllers/tags/DetailTagController";
+import { DeleteTagController } from "./controllers/tags/DeleteTagController";
+import { EditTagController } from "./controllers/tags/EditTagController";
 
 const router = Router();
 
@@ -28,6 +32,9 @@ const detailUsersController = new DetailUsersController();
 
 const createTagController = new CreateTagController();
 const listTagsController = new ListTagsController();
+const detailTagController = new DetailTagController();
+const deleteTagController = new DeleteTagController();
+const editTagController = new EditTagController();
 
 const createComplimentController = new CreateComplimentController();
 const listUserSendComplimentsController = new ListUserSendComplimentController();
@@ -52,6 +59,9 @@ router.get("/users/details", ensureAuthenticated, detailUsersController.handle);
 //Tags
 router.post("/tags", ensureAuthenticated, ensureAmdin, createTagController.handle);
 router.get("/tags", ensureAuthenticated, listTagsController.handle);
+router.get("/tags/:id", ensureAuthenticated, detailTagController.handle);
+router.patch("/tags/:id", ensureAuthenticated, editTagController.handle);
+router.delete("/tags/:id", ensureAuthenticated, deleteTagController.handle);
 
 //Compliments
 router.post("/compliments", ensureAuthenticated, createComplimentController.handle);
